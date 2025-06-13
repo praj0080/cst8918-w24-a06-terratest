@@ -36,10 +36,10 @@ func TestAzureLinuxVMCreation(t *testing.T) {
 	nicName := terraform.Output(t, terraformOptions, "nic_name") // used for extra validation
 	resourceGroup := terraform.Output(t, terraformOptions, "resource_group_name")
 
-	// ✅ Check VM name is not empty
+	//  Check VM name is not empty
 	assert.NotEmpty(t, vmName)
 
-	// ✅ Confirm NIC exists and is attached to the VM
+	//  Confirm NIC exists and is attached to the VM
 	nicList, err := azure.GetVirtualMachineNicsE(vmName, resourceGroup, subscriptionId)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, nicList, "NIC list should not be empty")
@@ -47,7 +47,7 @@ func TestAzureLinuxVMCreation(t *testing.T) {
 
 	t.Logf("NIC(s) attached to VM: %v", nicList)
 
-	// ✅ Confirm the VM is running the correct Ubuntu version
+	//  Confirm the VM is running the correct Ubuntu version
 	vmImage, err := azure.GetVirtualMachineImageE(vmName, resourceGroup, subscriptionId)
 	assert.NoError(t, err)
 	assert.Contains(t, vmImage.SKU, "22_04", "Expected Ubuntu version not found") // or "20_04-lts"
